@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Severino</title>
+    <!-- Carregando Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Definindo a fonte e o fundo principal */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Fundo cinza claro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Estilo para a "moldura" do celular */
+        .mobile-frame {
+            width: 100%;
+            max-width: 400px; /* Largura típica de um celular */
+            height: 90vh;
+            max-height: 800px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            background-color: white;
+        }
+
+        /* Estilos específicos para as telas */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            opacity: 0;
+            transform: translateX(100%);
+            z-index: 10;
+            display: none;
+        }
+
+        .screen.active {
+            opacity: 1;
+            transform: translateX(0);
+            display: block;
+            z-index: 20;
+        }
+
+        /* Estilo para o gradiente de fundo da Splash Screen (Azul Bebê) */
+        .splash-gradient {
+            background: linear-gradient(135deg, #a5f3fc 0%, #38bdf8 100%); /* Do ciano claro ao azul vibrante */
+        }
+        
+        /* Cor de destaque principal (Azul Bebê mais ) */
+        .bg-primary-accent { background-color: #38bdf8; }
+        .text-primary-accent { color: #38bdf8; }
+        .border-primary-accent { border-color: #38bdf8; }
+
+        /* Estilo para o slider de picante */
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #38bdf8;
+            cursor: pointer;
+            margin-top: -6px; /* Ajusta o polegar para o centro da pista */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+<div id="app" class="mobile-frame">
+
+    <!-- 1. TELA DE APRESENTAÇÃO (SPLASH SCREEN) -->
+    <div id="splash" class="screen splash-gradient flex flex-col justify-center items-center p-8">
+        <h1 class="text-white text-5xl font-extrabold tracking-wider">Severino</h1>
+        <div class="absolute bottom-0 left-0 right-0 p-4 flex justify-center space-x-4">
+            <!-- Simulação de imagens de produtos na parte inferior -->
+            <img src="https://placehold.co/120x80/22d3ee/ffffff?text=Empresas" onerror="this.src='https://placehold.co/120x80/22d3ee/ffffff?text=🍔';" class="rounded-xl shadow-lg transform translate-y-2 opacity-90" alt="Imagem de um Pedreiro  1">
+            <img src="https://placehold.co/100x70/0ea5e9/ffffff?text=Pessoas" onerror="this.src='https://placehold.co/100x70/0ea5e9/ffffff?text=🥬';" class="rounded-xl shadow-xl" alt="Imagem de um Pedreiro  2">
+        </div>
+    </div>
+
+    <!-- 2. TELA PRINCIPAL (HOME SCREEN) -->
+    <div id="home" class="screen flex flex-col">
+        <!-- Cabeçalho -->
+        <header class="p-4 flex justify-between items-center border-b border-gray-100">
+            <div class="flex flex-col">
+                <h1 class="text-2xl font-bold text-primary-accent">Severino</h1>
+                <p class="text-xs text-gray-500">Contrate o serviço que você precisa!</p>
+            </div>
+            <img src="https://placehold.co/40x40/cbd5e1/0f172a?text=Foto" class="w-10 h-10 rounded-full border-2 border-primary-accent" alt="Foto de Perfil">
+        </header>
+
+        <!-- Pesquisa e Filtros -->
+        <div class="p-4 pb-2">
+            <div class="flex items-center space-x-2 mb-4">
+                <div class="relative flex-grow">
+                    <input type="text" placeholder="Pesquisar..." class="w-full py-3 pl-4 pr-12 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-accent focus:border-primary-accent shadow-sm">
+                    <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </span>
+                </div>
+                <button class="w-12 h-12 flex items-center justify-center bg-primary-accent text-white rounded-xl shadow-md">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707v5l-4 2v-5a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+                </button>
+            </div>
+
+            <!-- Filtros/Tags -->
+            <div class="flex overflow-x-auto space-x-3 pb-3">
+                <button class="py-2 px-4 text-sm font-semibold rounded-full bg-primary-accent text-white shadow-md flex-shrink-0">Tudo</button>
+                <button class="py-2 px-4 text-sm font-medium rounded-full bg-gray-100 text-gray-600 hover:bg-sky-50 flex-shrink-0">Marcenaria</button>
+                <button class="py-2 px-4 text-sm font-medium rounded-full bg-gray-100 text-gray-600 hover:bg-sky-50 flex-shrink-0">Eletrica</button>
+                <button class="py-2 px-4 text-sm font-medium rounded-full bg-gray-100 text-gray-600 hover:bg-sky-50 flex-shrink-0">Encanador</button>
+                <button class="py-2 px-4 text-sm font-medium rounded-full bg-gray-100 text-gray-600 hover:bg-sky-50 flex-shrink-0">Segurança</button>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal (Lista de Produtos) -->
+        <main id="product-list" class="flex-grow overflow-y-auto p-4 grid grid-cols-2 gap-4 pb-20">
+            <!-- Cards de produtos serão renderizados aqui pelo JS -->
+        </main>
+
+        <!-- Barra de Navegação Inferior (Footer Fixo) -->
+        <footer class="fixed bottom-0 w-full max-w-[400px] h-16 bg-white border-t border-gray-100 flex justify-around items-center rounded-b-3xl px-4 z-30">
+            <!-- Home -->
+            <button onclick="showPage('home')" class="text-primary-accent">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+            </button>
+            
+            <!-- Orçamentos -->
+            <button onclick="showPage('cart')" class="text-gray-400 hover:text-primary-accent transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 14v-3a7 7 0 1 1 14 0v3"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 14h18v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-2z"/>
+                </svg>
+            </button>
+            
+            <!-- Botão Central (Adição Rápida/Ação Principal - Volta para Home) -->
+            <div class="relative w-16 h-16 -mt-8 flex justify-center items-center">
+                <button onclick="showPage('home')" class="w-14 h-14 bg-primary-accent rounded-full text-white shadow-xl hover:bg-sky-500 transition-colors flex items-center justify-center">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m-8-8h16"></path></svg>
+                </button>
+            </div>
+            
+            <!-- Favoritos -->
+            <button onclick="showPage('favorites')" class="text-gray-400 hover:text-primary-accent transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+            </button>
+            
+            <!-- Perfil -->
+            <button onclick="showPage('profile')" class="text-gray-400 hover:text-primary-accent transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+            </button>
+        </footer>
+    </div>
+
+    <!-- 3. TELA DE DETALHES DO PRODUTO -->
+    <div id="details" class="screen flex flex-col">
+        <!-- Botão Voltar (topo) -->
+        <button onclick="showPage('home')" class="absolute top-4 left-4 z-30 bg-white p-2 rounded-full shadow-lg text-primary-accent">
+             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        </button>
+
+        <!-- Imagem do Produto em Destaque -->
+        <div id="detail-image-container" class="w-full h-1/2 bg-gray-100 flex items-center justify-center relative overflow-hidden">
+            <!-- A imagem será injetada aqui pelo JS -->
+        </div>
+
+        <!-- Conteúdo e Customização -->
+        <div class="flex-grow overflow-y-auto p-6 bg-white -mt-8 rounded-t-3xl shadow-lg z-20">
+            <h2 id="detail-name" class="text-3xl font-extrabold text-gray-800 mb-2">Nome do Produto</h2>
+            <div class="flex items-center text-sm text-gray-500 mb-4">
+                <span class="text-yellow-400 mr-1">★</span>
+                <span id="detail-rating">4.8</span>
+                <span class="mx-2">•</span>
+                <span id="detail-time">14 mins</span>
+            </div>
+
+            <p id="detail-description" class="text-gray-600 mb-6 leading-relaxed">Descrição detalhada do produto.</p>
+
+            <!-- Seção de Customização: Urgencia  -->
+            <div class="mb-8">
+                <p class="font-bold text-gray-800 mb-3">Urgencia </p>
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm">Baixa</span>
+                    <input type="range" min="0" max="100" value="50" class="flex-grow h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer range-lg" style="--tw-ring-color: #38bdf8;">
+                    <span class="text-sm">Alta</span>
+                </div>
+            </div>
+
+            <!-- Controle de Quantidade -->
+            <div class="flex justify-between items-center py-4 border-t border-b border-gray-100 mb-8">
+                <p class="font-bold text-gray-800">Quantidade</p>
+                <div class="flex items-center space-x-4">
+                    <button id="qty-minus" class="w-10 h-10 border border-gray-300 rounded-lg text-gray-600 font-bold hover:bg-gray-50">-</button>
+                    <span id="detail-quantity" class="text-xl font-bold text-gray-800">1</span>
+                    <button id="qty-plus" class="w-10 h-10 bg-primary-accent text-white rounded-lg font-bold shadow-md hover:bg-sky-500">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chamada para Ação (CTA Fixo) -->
+        <footer class="p-6 border-t border-gray-100 flex justify-between items-center bg-white z-30">
+            <div class="flex flex-col">
+                <span class="text-xs text-gray-500">Preço Total</span>
+                <span id="detail-price" class="text-3xl font-extrabold text-primary-accent">$9.99</span>
+            </div>
+            <button id="order-now" class="py-4 px-8 bg-primary-accent text-white font-bold rounded-xl shadow-lg hover:bg-sky-500 transition-colors">
+                PEDIR AGORA
+            </button>
+        </footer>
+    </div>
+
+    <!-- 4. TELA CARRINHO -->
+    <div id="cart" class="screen flex flex-col">
+        <header class="p-4 flex justify-between items-center border-b border-primary-accent bg-primary-accent text-white">
+            <button onclick="showPage('home')" class="text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            </button>
+            <h2 class="text-xl font-bold">Meus orçamentos </h2>
+            <div class="w-6 h-6"></div> <!-- Espaçador -->
+        </header>
+        <div class="flex-grow overflow-y-auto p-6 text-center">
+            <div class="text-8xl text-primary-accent mb-4">🧢</div>
+            <h3 class="text-2xl font-bold text-gray-700 mb-2">Sem orçamentos no momento</h3>
+            <p class="text-gray-500 mb-8">Adicione seus orçamentos favoritos para fazer uma solicitação.</p>
+            <button onclick="showPage('home')" class="py-3 px-6 bg-primary-accent text-white font-semibold rounded-lg shadow-md hover:bg-sky-500 transition-colors">
+                Explorar o Menu
+            </button>
+        </div>
+    </div>
+    
+    <!-- 5. TELA FAVORITOS -->
+    <div id="favorites" class="screen flex flex-col">
+        <header class="p-4 flex justify-between items-center border-b border-primary-accent bg-primary-accent text-white">
+            <button onclick="showPage('home')" class="text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            </button>
+            <h2 class="text-xl font-bold">Meus Favoritos</h2>
+            <div class="w-6 h-6"></div>
+        </header>
+        <div class="flex-grow overflow-y-auto p-6 text-center">
+            <div class="text-8xl text-red-500 mb-4">❤️</div>
+            <h3 class="text-2xl font-bold text-gray-700 mb-2">Nenhum favorito salvo</h3>
+            <p class="text-gray-500 mb-8">Toque no ícone de coração nos produtos para salvá-los aqui!</p>
+            <button onclick="showPage('home')" class="py-3 px-6 bg-primary-accent text-white font-semibold rounded-lg shadow-md hover:bg-sky-500 transition-colors">
+                Começar a Favoritar
+            </button>
+        </div>
+    </div>
+
+    <!-- 6. TELA PERFIL -->
+    <div id="profile" class="screen flex flex-col">
+        <header class="p-4 flex justify-between items-center border-b border-primary-accent bg-primary-accent text-white">
+            <button onclick="showPage('home')" class="text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            </button>
+            <h2 class="text-xl font-bold">Meu Perfil</h2>
+            <div class="w-6 h-6"></div>
+        </header>
+        <div class="flex-grow overflow-y-auto p-6">
+            <div class="flex flex-col items-center mb-6">
+                <img src="https://placehold.co/100x100/cbd5e1/0f172a?text=Foto" class="w-24 h-24 rounded-full border-4 border-primary-accent shadow-lg" alt="Foto de Perfil">
+                <h3 class="mt-4 text-xl font-bold text-gray-800">João da Silva</h3>
+                <p class="text-sm text-gray-500">joao.silva@email.com</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="bg-gray-50 p-4 rounded-xl shadow-sm flex items-center justify-between">
+                    <span class="text-gray-700 font-medium">Histórico de Pedidos</span>
+                    <svg class="w-5 h-5 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2m-9 0V3h4m-4 2h4m-4 4h.01M17 13h.01M17 17h.01M7 13h4m-4 4h4"></path></svg>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-xl shadow-sm flex items-center justify-between">
+                    <span class="text-gray-700 font-medium">Endereços Salvos</span>
+                    <svg class="w-5 h-5 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-xl shadow-sm flex items-center justify-between">
+                    <span class="text-gray-700 font-medium">Configurações de Pagamento</span>
+                    <svg class="w-5 h-5 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                </div>
+            </div>
+            
+            <button onclick="alertUser('Sair', 'Você foi desconectado com sucesso.')" class="mt-8 w-full py-3 text-red-500 border border-red-500 rounded-xl font-semibold hover:bg-red-50 transition-colors">
+                Sair
+            </button>
+        </div>
+    </div>
+    
+</div>
+
+<script>
+    // Configuração do estado do aplicativo
+    let currentPage = 'splash';
+    let currentProduct = null;
+    let quantity = 1;
+
+    // Dados de exemplo
+    const products = [
+        {
+            id: 1,
+            name: "Pedreiro ",
+            description: "O pedreiro é o profissional responsável por executar, reparar ou reformar estruturas físicas, como casas, muros, pisos, paredes e outros elementos da construção civil.",
+            image: "https://placehold.co/400x300/38bdf8/ffffff?text=Pedreiro",
+            price: 9.99,
+            rating: 4.9,
+            time: 12,
+            tag: "Combos"
+        },
+        {
+            id: 2,
+            name: "Pintor",
+            description: "Pintor, em construção civil e decoração, é o profissional responsável pela proteção e decoração de paredes e outras superfícies mediante aplicação de tinta.",
+            image: "https://placehold.co/400x300/a5f3fc/083344?text=Pintor",
+            price: 8.50,
+            rating: 4.8,
+            time: 14,
+            tag: "Vegano"
+        },
+        {
+            id: 3,
+            name: "Chaveiro",
+            description: "O chaveiro é responsável por diversas funções essenciais, incluindo a confecção e conserto de chaves, a troca de segredos e a manutenção de fechaduras.",
+            image: "https://placehold.co/400x300/7dd3fc/ffffff?text=Chaveiro",
+            price: 7.90,
+            rating: 4.6,
+            time: 15,
+            tag: "Lanches"
+        },
+        {
+            id: 4,
+            name: "Eletricistas",
+            description: "Os eletricistas são profissionais essenciais responsáveis pela instalação, manutenção e reparo de sistemas elétricos, garantindo a segurança e eficiência em residências e empresas.",
+            image: "https://placehold.co/400x300/38bdf8/ffffff?text=Eletricistas",
+            price: 4.00,
+            rating: 4.5,
+            time: 10,
+            tag: "Lanches"
+        }
+    ];
+
+    /**
+     * Alterna a exibição das telas (Splash, Home, Details, Cart, Favorites, Profile).
+     * @param {string} pageName O ID da tela a ser exibida.
+     */
+    function showPage(pageName) {
+        document.querySelectorAll('.screen').forEach(screen => {
+            screen.classList.remove('active');
+            screen.style.display = 'none';
+        });
+
+        const targetScreen = document.getElementById(pageName);
+        if (targetScreen) {
+            targetScreen.style.display = 'block';
+            // Usa setTimeout para garantir a transição Baixa após o display:block
+            setTimeout(() => targetScreen.classList.add('active'), 10);
+            currentPage = pageName;
+            updateFooterStyles(pageName);
+        }
+    }
+
+    /**
+     * Atualiza o estilo dos ícones de navegação no footer para indicar a página ativa.
+     * @param {string} activePage O ID da página ativa.
+     */
+    function updateFooterStyles(activePage) {
+        const footerButtons = document.querySelectorAll('footer button');
+        
+        // Mapeia o ID da página para o índice do botão no footer
+        const pageToButtonIndex = {
+            'home': 0, // Primeiro botão (Home)
+            'cart': 1, // Segundo botão (Carrinho)
+            'favorites': 3, // Quarto botão (Favoritos)
+            'profile': 4 // Quinto botão (Perfil)
+        };
+
+        footerButtons.forEach((button, index) => {
+            const isCenterButton = index === 2; // O botão central '+'
+
+            // Reseta estilos
+            button.classList.remove('text-primary-accent');
+            button.classList.add('text-gray-400', 'hover:text-primary-accent');
+
+            // Aplica estilo à página ativa, ignorando o botão central '+'
+            if (pageToButtonIndex[activePage] === index && !isCenterButton) {
+                button.classList.add('text-primary-accent');
+                button.classList.remove('text-gray-400');
+            }
+            
+            // O botão central (+) deve manter o estilo de destaque
+            if (isCenterButton) {
+                 button.classList.add('bg-primary-accent', 'text-white', 'shadow-xl');
+                 button.classList.remove('text-gray-400');
+            }
+        });
+    }
+
+    /**
+     * Renderiza os cards de produtos na tela Home.
+     */
+    function renderProductCards() {
+        const listContainer = document.getElementById('product-list');
+        if (!listContainer) return;
+
+        listContainer.innerHTML = products.map(product => `
+            <div onclick="viewDetails(${product.id})" class="bg-white rounded-2xl shadow-md overflow-hidden cursor-pointer transform hover:scale-[1.02] transition-transform duration-300">
+                <div class="h-28 overflow-hidden">
+                    <img src="${product.image.replace("400x300", "200x140")}" onerror="this.src='https://placehold.co/200x140/a5f3fc/083344?text=ITEM';" class="w-full h-full object-cover" alt="${product.name}">
+                </div>
+                <div class="p-3">
+                    <h3 class="font-bold text-sm mb-1">${product.name.split(' ')[0]}</h3>
+                    <p class="text-xs text-gray-500 truncate">${product.name.split(' ').slice(1).join(' ')}</p>
+                    <div class="flex items-center justify-between mt-2">
+                        <div class="flex items-center text-xs text-gray-500">
+                            <span class="text-yellow-400 mr-1">★</span>${product.rating}
+                        </div>
+                        <button onclick="event.stopPropagation(); alertUser('Adicionado!', '${product.name} adicionado rapidamente ao carrinho.');" class="w-6 h-6 bg-primary-accent rounded-full text-white flex items-center justify-center shadow-md">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m-8-8h16"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    /**
+     * Preenche a tela de detalhes com os dados do produto selecionado.
+     * @param {number} id O ID do produto.
+     */
+    function viewDetails(id) {
+        currentProduct = products.find(p => p.id === id);
+        if (!currentProduct) return;
+
+        // Resetar quantidade
+        quantity = 1;
+        document.getElementById('detail-quantity').textContent = quantity;
+
+        // Atualizar campos
+        document.getElementById('detail-image-container').innerHTML = `<img src="${currentProduct.image}" onerror="this.src='https://placehold.co/400x300/a5f3fc/083344?text=PRODUTO';" class="w-full h-full object-cover" alt="${currentProduct.name}">`;
+        document.getElementById('detail-name').textContent = currentProduct.name;
+        document.getElementById('detail-rating').textContent = currentProduct.rating;
+        document.getElementById('detail-time').textContent = `${currentProduct.time} mins`;
+        document.getElementById('detail-description').textContent = currentProduct.description;
+        updatePriceDisplay();
+
+        showPage('details');
+    }
+
+    /**
+     * Atualiza o preço exibido na tela de detalhes com base na quantidade.
+     */
+    function updatePriceDisplay() {
+        if (!currentProduct) return;
+        const totalPrice = (currentProduct.price * quantity).toFixed(2);
+        document.getElementById('detail-price').textContent = `$${totalPrice}`;
+    }
+
+    /**
+     * Manipula o aumento ou diminuição da quantidade do produto.
+     * @param {number} delta - 1 para aumentar, -1 para diminuir.
+     */
+    function updateQuantity(delta) {
+        quantity += delta;
+        if (quantity < 1) quantity = 1; // Garante que a quantidade mínima é 1
+
+        document.getElementById('detail-quantity').textContent = quantity;
+        updatePriceDisplay();
+    }
+
+
+    // --- Inicialização ---
+    function setupInitialState() {
+        // Renderiza os cards de produtos
+        renderProductCards();
+
+        // 1. Inicia na tela splash
+        showPage('splash');
+
+        // 2. Transiciona para a tela Home após 2 segundos
+        setTimeout(() => {
+            showPage('home');
+        }, 2000);
+
+        // 3. Configura listeners de quantidade
+        document.getElementById('qty-minus').addEventListener('click', () => updateQuantity(-1));
+        document.getElementById('qty-plus').addEventListener('click', () => updateQuantity(1));
+        document.getElementById('order-now').addEventListener('click', () => {
+            alertUser('Pedido em Andamento!', `${currentProduct.name} (${quantity}x) adicionado ao seu pedido.`);
+        });
+    }
+
+    /**
+     * Função substituta para alert()
+     * @param {string} title Título da mensagem
+     * @param {string} message Conteúdo da mensagem
+     */
+    function alertUser(title, message) {
+        // Implementação simples de modal (pop-up)
+        const modal = document.createElement('div');
+        modal.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4';
+        modal.innerHTML = `
+            <div class="bg-white p-6 rounded-xl shadow-2xl max-w-sm w-full">
+                <h3 class="text-xl font-bold text-primary-accent mb-2">${title}</h3>
+                <p class="text-gray-700 mb-4">${message}</p>
+                <button onclick="this.parentNode.parentNode.remove()" class="w-full py-2 bg-primary-accent text-white rounded-lg font-semibold hover:bg-sky-500 transition-colors">Fechar</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+
+    // Inicia o aplicativo ao carregar a janela
+    window.onload = setupInitialState;
+</script>
+
+</body>
+</html>
